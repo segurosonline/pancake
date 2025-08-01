@@ -2,130 +2,137 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guía de Finanzas Descentralizadas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios Web Profesionales</title>
   <style>
-    /* Reset y estilos base */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; height: auto; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
-    /* Contenedor central */
-    .container { width: 90%; max-width: 800px; margin: 0 auto; padding: 2rem 0; }
+    header {
+      background-color: #1a1a1a;
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+    }
 
-    /* Header */
-    header { background: #f8f9fa; padding: 1rem 0; }
-    .logo { font-size: 1.5rem; font-weight: bold; }
-    nav ul { display: flex; justify-content: flex-end; list-style: none; }
-    nav ul li { margin-left: 1.5rem; }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
 
-    /* Hero */
-    .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 4rem 1rem; background: #eef2f5; }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-    .hero p { font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; }
-    .btn { display: inline-block; padding: 0.75rem 1.5rem; background: #0077cc; color: #fff; border-radius: 4px; transition: background 0.3s ease; }
-    .btn:hover { background: #005fa3; }
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1.2rem;
+    }
 
-    /* Secciones */
-    section { padding: 3rem 0; }
-    .section-title { font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
-    .features { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-    @media(min-width: 600px) { .features { grid-template-columns: 1fr 1fr; } }
-    .feature { background: #fefefe; padding: 1.5rem; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .feature h3 { margin-bottom: 0.5rem; }
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
 
-    /* Formulario */
-    .form-wrap { background: #f8f9fa; padding: 2rem; border-radius: 4px; max-width: 500px; margin: 0 auto; }
-    .form-wrap label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
-    .form-wrap input[type="email"] { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; }
-    .form-wrap input[type="submit"] { cursor: pointer; }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
 
-    /* Footer */
-    footer { background: #f8f9fa; text-align: center; padding: 1rem 0; font-size: 0.9rem; color: #666; }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .card h3 {
+      margin-top: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .cta {
+      background-color: #0048ff;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+      border-radius: 8px;
+    }
+
+    .cta h2 {
+      margin: 0 0 1rem 0;
+    }
+
+    .cta a {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #fff;
+      color: #0048ff;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f1f1f1;
+      color: #777;
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="logo">Finanzas DeFi</div>
-      <nav>
-        <ul>
-          <li><a href="#que-es">Qué es DeFi</a></li>
-          <li><a href="#beneficios">Beneficios</a></li>
-          <li><a href="#riesgos">Riesgos</a></li>
-          <li><a href="#descarga">Descarga</a></li>
-        </ul>
-      </nav>
+
+<header>
+  <h1>Soluciones Web Profesionales</h1>
+  <p>Transformamos tu presencia digital en una herramienta poderosa</p>
+</header>
+
+<div class="container">
+  <section class="services">
+    <div class="card">
+      <img src="https://img.icons8.com/fluency/96/domain.png" alt="Desarrollo Web" />
+      <h3>Desarrollo Web</h3>
+      <p>Diseño y desarrollo de sitios web personalizados, rápidos, seguros y adaptables a cualquier dispositivo.</p>
     </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero" id="inicio">
-    <div class="container">
-      <h1>Guía completa de Finanzas Descentralizadas</h1>
-      <p>Aprende los principios de la tecnología blockchain y descubre cómo funcionan los protocolos de finanzas descentralizadas de forma segura y transparente.</p>
-      <a href="#descarga" class="btn">Descargar Guía Gratuita</a>
+    <div class="card">
+      <img src="https://img.icons8.com/fluency/96/web-analytics.png" alt="SEO" />
+      <h3>Optimización SEO</h3>
+      <p>Mejoramos tu visibilidad en Google para atraer más visitas orgánicas y clientes potenciales.</p>
     </div>
-  </section>
-
-  <!-- Qué es DeFi -->
-  <section id="que-es" class="container">
-    <h2 class="section-title">¿Qué es DeFi?</h2>
-    <p>Las finanzas descentralizadas (DeFi) son un ecosistema de aplicaciones financieras construidas sobre redes blockchain. Funcionan sin intermediarios bancarios y permiten realizar operaciones como préstamos, ahorro y pagos de manera directa entre usuarios.</p>
-  </section>
-
-  <!-- Beneficios -->
-  <section id="beneficios" class="container">
-    <h2 class="section-title">Beneficios principales</h2>
-    <div class="features">
-      <div class="feature">
-        <h3>Acceso Global</h3>
-        <p>Cualquier persona con conexión a Internet puede participar sin necesidad de autorización previa.</p>
-      </div>
-      <div class="feature">
-        <h3>Transparencia</h3>
-        <p>Todas las transacciones se registran en la blockchain, garantizando auditabilidad y trazabilidad.</p>
-      </div>
-      <div class="feature">
-        <h3>Innovación</h3>
-        <p>Surgen nuevos productos financieros como préstamos con garantía, staking y más.</p>
-      </div>
-      <div class="feature">
-        <h3>Control Total</h3>
-        <p>Los usuarios controlan sus activos sin necesidad de confiar en terceros.</p>
-      </div>
+    <div class="card">
+      <img src="https://img.icons8.com/fluency/96/cloudflare.png" alt="Hosting" />
+      <h3>Hosting y Dominio</h3>
+      <p>Ofrecemos alojamiento web rápido y dominio personalizado con certificado SSL incluido.</p>
+    </div>
+    <div class="card">
+      <img src="https://img.icons8.com/fluency/96/online-support.png" alt="Soporte" />
+      <h3>Soporte Técnico</h3>
+      <p>Asistencia continua para que tu sitio web siempre esté online, actualizado y protegido.</p>
     </div>
   </section>
 
-  <!-- Riesgos -->
-  <section id="riesgos" class="container">
-    <h2 class="section-title">Riesgos a considerar</h2>
-    <p>Como toda innovación, DeFi implica riesgos. Es importante entender:
-      <ul>
-        <li>Vulnerabilidades en contratos inteligentes.</li>
-        <li>Falta de regulación y protección legal.</li>
-        <li>Alta volatilidad de activos digitales.</li>
-      </ul>
-    </p>
+  <section class="cta">
+    <h2>¿Listo para impulsar tu negocio?</h2>
+    <p>Contáctanos hoy mismo y recibe una asesoría gratuita sobre cómo mejorar tu presencia online.</p>
+    <a href="https://wa.me/573001234567" target="_blank">Hablar con un asesor</a>
   </section>
+</div>
 
-  <!-- Descarga Guia -->
-  <section id="descarga" class="container">
-    <h2 class="section-title">Descarga tu guía gratuita</h2>
-    <div class="form-wrap">
-      <form action="#" method="POST">
-        <label for="email">Correo electrónico</label>
-        <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required />
-        <input type="submit" value="Enviar y Descargar" class="btn" />
-      </form>
-    </div>
-  </section>
+<footer>
+  &copy; 2025 ServiciosWebPro | Todos los derechos reservados.
+</footer>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 Finanzas DeFi. Todos los derechos reservados.
-  </footer>
 </body>
 </html>
